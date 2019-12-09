@@ -2,7 +2,9 @@
 public class Header {
 	byte[] startCoode;
 	byte[] command;
-	byte[] sequence;
+	byte[] sequence1;
+	byte[] sequence2;
+	byte[] sequence3;
 	byte[] terminalCat;
 	byte[] ip;
 	byte[] imei;
@@ -26,14 +28,6 @@ public class Header {
 
 	public void setCommand(byte[] command) {
 		this.command = command;
-	}
-
-	public byte[] getSequence() {
-		return sequence;
-	}
-
-	public void setSequence(byte[] sequence) {
-		this.sequence = sequence;
 	}
 
 	public byte[] getTerminalCat() {
@@ -66,6 +60,30 @@ public class Header {
 
 	public void setDataSize(byte[] dataSize) {
 		this.dataSize = dataSize;
+	}
+
+	public byte[] getSequence1() {
+		return sequence1;
+	}
+
+	public void setSequence1(byte[] sequence1) {
+		this.sequence1 = sequence1;
+	}
+
+	public byte[] getSequence2() {
+		return sequence2;
+	}
+
+	public void setSequence2(byte[] sequence2) {
+		this.sequence2 = sequence2;
+	}
+
+	public byte[] getSequence3() {
+		return sequence3;
+	}
+
+	public void setSequence3(byte[] sequence3) {
+		this.sequence3 = sequence3;
 	}
 
 }

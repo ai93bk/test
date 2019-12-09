@@ -38,4 +38,7 @@ public class GetBinaryUtil {
 	public byte[] getStringBinary(String s) {
 		return s.getBytes();
 	}
+	public byte[] getStringBinary(String s,int min,int max) {
+		return s.substring(min-1,max).getBytes();
+	}
 }

@@ -6,6 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,15 +30,15 @@ import org.apache.log4j.xml.DOMConfigurator;
  * Main ヘッダ・ボディ部にバイナリ変換後の値を代入
  * */
 public class Main {
-	/*static String in_dir=".\\in\\";
+	static String in_dir=".\\in\\";
 	static String success_dir=".\\in\\success\\";
 	static String error_dir=".\\in\\error\\";
 	static String out_dir=".\\out\\";
 	static String conf_dir=".\\conf\\";
 	static String log_dir=".\\log\\";
-	static String tmp_dir=".\\tmp\\";*/
+	static String tmp_dir=".\\tmp\\";
 	static BufferedReader br;
-
+/*
 	static String bin_dir=new File("").getAbsolutePath();
 	static String in_dir=new File("").getAbsolutePath().replace("bin","")+"in\\";
 	static String success_dir=new File("").getAbsolutePath().replace("bin","")+"in\\success\\";
@@ -44,7 +47,7 @@ public class Main {
 	static String conf_dir=new File("").getAbsolutePath().replace("bin","")+"conf\\";
 	static String log_dir=new File("").getAbsolutePath().replace("bin","")+"log\\";
 	static String tmp_dir=new File("").getAbsolutePath().replace("bin","")+"tmp\\";
-
+*/
 	public static void main(String[] args) {
 		// TODO 自動生成されたメソッド・スタブ
 		Calendar cl = Calendar.getInstance();
@@ -58,6 +61,7 @@ public class Main {
 
 		GetLogUtil glu = new GetLogUtil();
 		File[] csv_path_list;
+		File[] dat_path_list;
 		GetPathUtil gpu = new GetPathUtil();
 		int[] errorfile = new int[gpu.getLength()];
 
@@ -137,7 +141,10 @@ public class Main {
 					head.setStartCoode(gbu.getHexBinary("AA55AA55"));
 					head.setCommand(gbu.getHexBinary(read_data[3]));
 					head.setIp(gbu.getStringBinary(read_data[5]));
-					head.setSequence(gbu.getStringBinary(read_data[5]+read_data[4]+String.format("%09d",i)));
+					String seq = read_data[5]+read_data[1]+String.format("%09d",i);
+					head.setSequence1(gbu.getStringBinary(seq,1,16));
+					head.setSequence2(gbu.getStringBinary(seq,17,32));
+					head.setSequence3(gbu.getStringBinary(seq,33,35));
 					head.setTerminalCat(gbu.getBCDBinary(read_data[4]));
 					head.setImei(gbu.getBCDBinary(read_data[6],1));
 					ArrayList<Sensor1Body> s1body = new ArrayList<Sensor1Body>();
@@ -147,7 +154,7 @@ public class Main {
 						for(int j=0; j<readline.size(); j++) {
 							String[] s =readline.get(j);
 							if(j!=0) {
-								body.setType(gbu.getHexBinary("0070",2));
+								body.setType(gbu.getHexBinary("0070"));
 								body.setS_dataNum(gbu.getHexBinary("600",2));
 								body.setDate(gbu.getBCDBinary(s[1]));
 								body.setLat(gbu.getHexBinary(s[7],4));
@@ -200,7 +207,7 @@ public class Main {
 						for(int j=0; j<readline.size(); j++) {
 							String[] s = readline.get(j);
 							if(j!=0) {
-								body.setType(gbu.getHexBinary("0071",2));
+								body.setType(gbu.getHexBinary("0071"));
 								body.setS_dataNum(gbu.getHexBinary("600",2));
 								body.setDate(gbu.getBCDBinary(s[1]));
 								body.setpDataCat_postion(gbu.getStringBinary("90"));
@@ -301,13 +308,27 @@ public class Main {
 						}catch (IOException e) {
 							e.printStackTrace();
 						}
+
 						head.setDataSize(gbu.getHexBinary(fou.getSize(f),4));
 						String dat = csv_path_list[i].getName().substring(0,csv_path_list[i].getName().lastIndexOf('.')) + ".dat";
+						if(new File(out_dir + "\\" + dat).exists()) {
+							if(!(new File(out_dir+"\\"+time2).exists())) {
+								new File(out_dir+"\\"+time2).mkdir();
+							}
+							FileMoveUtil fmu = new FileMoveUtil(new File(out_dir+"\\"+dat).getPath(),out_dir+"\\"+time2+"\\"+dat);
+							try {
+								fmu.moveFile();
+							}catch(IOException e) {
+								e.printStackTrace();
+							}
+						}
 					    BufferedOutputStream bf2 = new BufferedOutputStream(new FileOutputStream(out_dir+"\\"+dat));
 						try {
 						    bf2.write(head.getStartCoode());
 						    bf2.write(head.getCommand());
-						    bf2.write(head.getSequence());
+						    bf2.write(head.getSequence1());
+						    bf2.write(head.getSequence2());
+						    bf2.write(head.getSequence3());
 						    bf2.write(head.getTerminalCat());
 						    bf2.write(head.getIp());
 						    bf2.write(head.getImei());
@@ -341,7 +362,18 @@ public class Main {
 						String f3 = tmp_dir+"\\filesize3.tmp";
 						String f4 = tmp_dir+"\\filesize4.tmp";
 						String dat = csv_path_list[i].getName().substring(0,csv_path_list[i].getName().lastIndexOf('.')) + ".dat";
-				        BufferedOutputStream bf2 = new BufferedOutputStream(new FileOutputStream(f2));
+						if(new File(out_dir + "\\" + dat).exists()) {
+							if(!(new File(out_dir+"\\"+time2).exists())) {
+								new File(out_dir+"\\"+time2).mkdir();
+							}
+							FileMoveUtil fmu = new FileMoveUtil(new File(out_dir+"\\"+dat).getPath(),out_dir+"\\"+time2+"\\"+dat);
+							try {
+								fmu.moveFile();
+							}catch(IOException e) {
+								e.printStackTrace();
+							}
+						}
+						BufferedOutputStream bf2 = new BufferedOutputStream(new FileOutputStream(f2));
 				        BufferedOutputStream bf3 = new BufferedOutputStream(new FileOutputStream(f3));
 				        BufferedOutputStream bf4 = new BufferedOutputStream(new FileOutputStream(f4));
 					    BufferedOutputStream bf5 = new BufferedOutputStream(new FileOutputStream(out_dir+"\\"+dat));
@@ -419,7 +451,9 @@ public class Main {
 							Sensor2Body b2=s2body.get(0);
 						    bf5.write(head.getStartCoode());
 						    bf5.write(head.getCommand());
-						    bf5.write(head.getSequence());
+						    bf5.write(head.getSequence1());
+						    bf5.write(head.getSequence2());
+						    bf5.write(head.getSequence3());
 						    bf5.write(head.getTerminalCat());
 						    bf5.write(head.getIp());
 						    bf5.write(head.getImei());
@@ -472,6 +506,19 @@ public class Main {
 				            e.printStackTrace();
 				        }
 					}
+
+
+					String dat = csv_path_list[i].getName().substring(0,csv_path_list[i].getName().lastIndexOf('.')) + ".dat";
+					byte[] read_byte = null;
+					byte checkcode = 0;
+					Path file = Paths.get(out_dir+"\\"+dat);
+					read_byte = Files.readAllBytes(file);
+					checkcode=BinaryUtil.getCheckCode(read_byte);
+					BufferedOutputStream bf = new BufferedOutputStream(new FileOutputStream(out_dir+"\\"+dat));
+					bf.write(read_byte);
+					bf.write(checkcode);
+					bf.flush();
+					bf.close();
 				}catch(NullPointerException e) {
 					log.error(glu.getErrorLog()+"NullPointerException "+e.getLocalizedMessage());
 				}catch(FileNotFoundException e) {
