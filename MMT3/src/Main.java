@@ -29,16 +29,16 @@ import org.apache.log4j.xml.DOMConfigurator;
  * Main センサ種別チェック 3番目else if()→elseに変更
  * Main ヘッダ・ボディ部にバイナリ変換後の値を代入
  * */
-public class Main {/*
+public class Main {
 	static String in_dir=".\\in\\";
 	static String success_dir=".\\in\\success\\";
 	static String error_dir=".\\in\\error\\";
 	static String out_dir=".\\out\\";
 	static String conf_dir=".\\conf\\";
 	static String log_dir=".\\log\\";
-	static String tmp_dir=".\\tmp\\";*/
+	static String tmp_dir=".\\tmp\\";
 	static BufferedReader br;
-
+/*
 	static String bin_dir=new File("").getAbsolutePath();
 	static String in_dir=new File("").getAbsolutePath().replace("bin","")+"in\\";
 	static String success_dir=new File("").getAbsolutePath().replace("bin","")+"in\\success\\";
@@ -47,7 +47,7 @@ public class Main {/*
 	static String conf_dir=new File("").getAbsolutePath().replace("bin","")+"conf\\";
 	static String log_dir=new File("").getAbsolutePath().replace("bin","")+"log\\";
 	static String tmp_dir=new File("").getAbsolutePath().replace("bin","")+"tmp\\";
-
+*/
 	public static void main(String[] args) {
 		// TODO 自動生成されたメソッド・スタブ
 		Calendar cl = Calendar.getInstance();
