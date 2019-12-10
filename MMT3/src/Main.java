@@ -29,16 +29,16 @@ import org.apache.log4j.xml.DOMConfigurator;
  * Main センサ種別チェック 3番目else if()→elseに変更
  * Main ヘッダ・ボディ部にバイナリ変換後の値を代入
  * */
-public class Main {
+public class Main {/*
 	static String in_dir=".\\in\\";
 	static String success_dir=".\\in\\success\\";
 	static String error_dir=".\\in\\error\\";
 	static String out_dir=".\\out\\";
 	static String conf_dir=".\\conf\\";
 	static String log_dir=".\\log\\";
-	static String tmp_dir=".\\tmp\\";
+	static String tmp_dir=".\\tmp\\";*/
 	static BufferedReader br;
-/*
+
 	static String bin_dir=new File("").getAbsolutePath();
 	static String in_dir=new File("").getAbsolutePath().replace("bin","")+"in\\";
 	static String success_dir=new File("").getAbsolutePath().replace("bin","")+"in\\success\\";
@@ -47,7 +47,7 @@ public class Main {
 	static String conf_dir=new File("").getAbsolutePath().replace("bin","")+"conf\\";
 	static String log_dir=new File("").getAbsolutePath().replace("bin","")+"log\\";
 	static String tmp_dir=new File("").getAbsolutePath().replace("bin","")+"tmp\\";
-*/
+
 	public static void main(String[] args) {
 		// TODO 自動生成されたメソッド・スタブ
 		Calendar cl = Calendar.getInstance();
@@ -61,7 +61,6 @@ public class Main {
 
 		GetLogUtil glu = new GetLogUtil();
 		File[] csv_path_list;
-		File[] dat_path_list;
 		GetPathUtil gpu = new GetPathUtil();
 		int[] errorfile = new int[gpu.getLength()];
 
@@ -126,15 +125,15 @@ public class Main {
 					}
 					br.close();
 					log.info(glu.getInfoLog(19)+"\t"+csv_path_list[i].getName());
-					/*if(!(new File(success_dir+"\\"+time2).exists())) {
-	alc					new File(success_dir+"\\"+time2).mkdir();
+					if(!(new File(success_dir+"\\"+time2).exists())) {
+						new File(success_dir+"\\"+time2).mkdir();
 					}
 					FileMoveUtil fmu = new FileMoveUtil(csv_path_list[i].getPath(),success_dir+"\\"+time2+"\\"+csv_path_list[i].getName());
 					try {
 						fmu.moveFile();
 					}catch(IOException e) {
 						e.printStackTrace();
-					}*/
+					}
 					GetBinaryUtil gbu = new GetBinaryUtil();
 					Header head = new Header();
 					String[] read_data=readline.get(1);
@@ -315,7 +314,7 @@ public class Main {
 							if(!(new File(out_dir+"\\"+time2).exists())) {
 								new File(out_dir+"\\"+time2).mkdir();
 							}
-							FileMoveUtil fmu = new FileMoveUtil(new File(out_dir+"\\"+dat).getPath(),out_dir+"\\"+time2+"\\"+dat);
+							fmu = new FileMoveUtil(new File(out_dir+"\\"+dat).getPath(),out_dir+"\\"+time2+"\\"+dat);
 							try {
 								fmu.moveFile();
 							}catch(IOException e) {
@@ -366,7 +365,7 @@ public class Main {
 							if(!(new File(out_dir+"\\"+time2).exists())) {
 								new File(out_dir+"\\"+time2).mkdir();
 							}
-							FileMoveUtil fmu = new FileMoveUtil(new File(out_dir+"\\"+dat).getPath(),out_dir+"\\"+time2+"\\"+dat);
+							fmu = new FileMoveUtil(new File(out_dir+"\\"+dat).getPath(),out_dir+"\\"+time2+"\\"+dat);
 							try {
 								fmu.moveFile();
 							}catch(IOException e) {
@@ -567,7 +566,7 @@ public class Main {
 					}
 				}
 			}
-			/*for(int i=0; i<errorfile.length; i++) {
+			for(int i=0; i<errorfile.length; i++) {
 				if(errorfile[i]==1) {
 					if(!(new File(error_dir+"\\"+time2).exists())) {
 						new File(error_dir+"\\"+time2).mkdir();
@@ -579,7 +578,7 @@ public class Main {
 						e.printStackTrace();
 					}
 				}
-			}*/
+			}
 			log.info(glu.getInfoLog(17));
 		}else if(gpu.getLength() == 0) {
 			log.warn(glu.getWarnLog(7)+"\t"+in_dir);
