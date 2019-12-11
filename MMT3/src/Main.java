@@ -153,6 +153,7 @@ public class Main {
 						for(int j=0; j<readline.size(); j++) {
 							String[] s =readline.get(j);
 							if(j!=0) {
+								head.setDataSize(gbu.getHexBinary(String.valueOf((readline.size()-1)*82+4),4));
 								body.setType(gbu.getHexBinary("0070"));
 								body.setS_dataNum(gbu.getHexBinary("600",2));
 								body.setDate(gbu.getBCDBinary(s[1]));
@@ -206,11 +207,13 @@ public class Main {
 						for(int j=0; j<readline.size(); j++) {
 							String[] s = readline.get(j);
 							if(j!=0) {
+								head.setDataSize(gbu.getHexBinary(String.valueOf((readline.size()-1)*120+11),4));
 								body.setType(gbu.getHexBinary("0071"));
 								body.setS_dataNum(gbu.getHexBinary("600",2));
 								body.setDate(gbu.getBCDBinary(s[1]));
 								body.setpDataCat_postion(gbu.getStringBinary("90"));
 								body.setClassfy(gbu.getStringBinary("00"));
+								body.setpDataSize_p(gbu.getHexBinary("32",4));
 								body.setpDataNum_p(gbu.getHexBinary("1", 2));
 								body.setLat(gbu.getHexBinary(s[7],4));
 								body.setLatSec(gbu.getStringBinary(s[58]));
@@ -225,6 +228,7 @@ public class Main {
 								body.setHeight(gbu.getHexBinary(s[56],2));
 								body.setP_Correct(gbu.getStringBinary(s[57]));
 								body.setpDataCat_sensor(gbu.getStringBinary("92"));
+								body.setpDataSize_p(gbu.getHexBinary("72",4));
 								body.setpDataNum_a(gbu.getHexBinary("10", 2));
 								byte[][] fb = new byte[10][];
 								fb[0]=gbu.getHexBinary(s[13],2);
@@ -278,22 +282,41 @@ public class Main {
 							}
 						}
 					}
-					FileOutputUtil fou = new FileOutputUtil();
 					if(mode==1) {
-						String f = tmp_dir+"\\filesize1.tmp";
-				        BufferedOutputStream bf = new BufferedOutputStream(new FileOutputStream(f));
+						String dat = csv_path_list[i].getName().substring(0,csv_path_list[i].getName().lastIndexOf('.')) + ".dat";
+						if(new File(out_dir + "\\" + dat).exists()) {
+							if(!(new File(out_dir+"\\"+time2).exists())) {
+								new File(out_dir+"\\"+time2).mkdir();
+							}
+							fmu = new FileMoveUtil(new File(out_dir+"\\"+dat).getPath(),out_dir+"\\"+time2+"\\"+dat);
+							try {
+								fmu.moveFile();
+							}catch(IOException e) {
+								e.printStackTrace();
+							}
+						}
+					    BufferedOutputStream bf = new BufferedOutputStream(new FileOutputStream(out_dir+"\\"+dat));
 						try {
+						    bf.write(head.getStartCoode());
+						    bf.write(head.getCommand());
+						    bf.write(head.getSequence1());
+						    bf.write(head.getSequence2());
+						    bf.write(head.getSequence3());
+						    bf.write(head.getTerminalCat());
+						    bf.write(head.getIp());
+						    bf.write(head.getImei());
+						    bf.write(head.getDataSize());
 							for(int j=0; j<s1body.size(); j++) {
 								Sensor1Body body=s1body.get(j);
 								byte[][] fb = body.getFb_Accel();
 								byte[][] lr = body.getLr_Accel();
 								byte[][] ud = body.getUd_Accel();
-						        bf.write(body.getS_dataNum());
-						        bf.write(body.getDate());
-						        bf.write(body.getLat());
-						        bf.write(body.getLon());
-						        bf.write(body.getSpeed());
-						        bf.write(body.getPosition());
+								bf.write(body.getS_dataNum());
+								bf.write(body.getDate());
+								bf.write(body.getLat());
+								bf.write(body.getLon());
+								bf.write(body.getSpeed());
+								bf.write(body.getPosition());
 								bf.write(body.getMode());
 								bf.write(body.getP_Accel());
 								for(int k=0; k<10; k++) {
@@ -305,61 +328,9 @@ public class Main {
 							bf.flush();
 							bf.close();
 						}catch (IOException e) {
-							e.printStackTrace();
-						}
-
-						head.setDataSize(gbu.getHexBinary(fou.getSize(f),4));
-						String dat = csv_path_list[i].getName().substring(0,csv_path_list[i].getName().lastIndexOf('.')) + ".dat";
-						if(new File(out_dir + "\\" + dat).exists()) {
-							if(!(new File(out_dir+"\\"+time2).exists())) {
-								new File(out_dir+"\\"+time2).mkdir();
-							}
-							fmu = new FileMoveUtil(new File(out_dir+"\\"+dat).getPath(),out_dir+"\\"+time2+"\\"+dat);
-							try {
-								fmu.moveFile();
-							}catch(IOException e) {
-								e.printStackTrace();
-							}
-						}
-					    BufferedOutputStream bf2 = new BufferedOutputStream(new FileOutputStream(out_dir+"\\"+dat));
-						try {
-						    bf2.write(head.getStartCoode());
-						    bf2.write(head.getCommand());
-						    bf2.write(head.getSequence1());
-						    bf2.write(head.getSequence2());
-						    bf2.write(head.getSequence3());
-						    bf2.write(head.getTerminalCat());
-						    bf2.write(head.getIp());
-						    bf2.write(head.getImei());
-						    bf2.write(head.getDataSize());
-							for(int j=0; j<s1body.size(); j++) {
-								Sensor1Body body=s1body.get(j);
-								byte[][] fb = body.getFb_Accel();
-								byte[][] lr = body.getLr_Accel();
-								byte[][] ud = body.getUd_Accel();
-								bf2.write(body.getS_dataNum());
-								bf2.write(body.getDate());
-								bf2.write(body.getLat());
-								bf2.write(body.getLon());
-								bf2.write(body.getSpeed());
-								bf2.write(body.getPosition());
-								bf2.write(body.getMode());
-								bf2.write(body.getP_Accel());
-								for(int k=0; k<10; k++) {
-									bf2.write(fb[k]);
-									bf2.write(lr[k]);
-									bf2.write(ud[k]);
-								}
-							}
-							bf2.flush();
-							bf2.close();
-						}catch (IOException e) {
 				            e.printStackTrace();
 				        }
 					}else if(mode==2) {
-						String f2 = tmp_dir+"\\filesize2.tmp";
-						String f3 = tmp_dir+"\\filesize3.tmp";
-						String f4 = tmp_dir+"\\filesize4.tmp";
 						String dat = csv_path_list[i].getName().substring(0,csv_path_list[i].getName().lastIndexOf('.')) + ".dat";
 						if(new File(out_dir + "\\" + dat).exists()) {
 							if(!(new File(out_dir+"\\"+time2).exists())) {
@@ -372,135 +343,55 @@ public class Main {
 								e.printStackTrace();
 							}
 						}
-						BufferedOutputStream bf2 = new BufferedOutputStream(new FileOutputStream(f2));
-				        BufferedOutputStream bf3 = new BufferedOutputStream(new FileOutputStream(f3));
-				        BufferedOutputStream bf4 = new BufferedOutputStream(new FileOutputStream(f4));
-					    BufferedOutputStream bf5 = new BufferedOutputStream(new FileOutputStream(out_dir+"\\"+dat));
+					    BufferedOutputStream bf = new BufferedOutputStream(new FileOutputStream(out_dir+"\\"+dat));
 						try {
-							for(int j=0; j<s2body.size(); j++) {
-								Sensor2Body body=s2body.get(j);
-								byte[][] fb = body.getFb_Accel();
-								byte[][] lr = body.getLr_Accel();
-								byte[][] ud = body.getUd_Accel();
-								byte[][] a = body.getA_Correct();
-						        bf2.write(body.getpDataNum_p());
-						        bf2.write(body.getDate());
-						        bf2.write(body.getLat());
-						        bf2.write(body.getLatSec());
-						        bf2.write(body.getLon());
-						        bf2.write(body.getLonSec());
-						        bf2.write(body.getSpeed());
-						        bf2.write(body.getQuality());
-						        bf2.write(body.getMode());
-						        bf2.write(body.getSatellite_num());
-						        bf2.write(body.getPDOP());
-						        bf2.write(body.getPosition());
-						        bf2.write(body.getHeight());
-						        bf2.write(body.getP_Correct());
-						        bf3.write(body.getpDataNum_a());
-						        for(int k=0; k<10; k++) {
-									bf3.write(fb[k]);
-									bf3.write(lr[k]);
-									bf3.write(ud[k]);
-									bf3.write(a[k]);
-								}
-							}
-							for(int j=0; j<s2body.size(); j++) {
-								Sensor2Body body=s2body.get(j);
-								body.setpDataNum_p(gbu.getHexBinary(fou.getSize(f2),4));
-								body.setpDataSize_a(gbu.getHexBinary(fou.getSize(f3),4));
-							}
 							Sensor2Body b=s2body.get(0);
-						    bf4.write(b.getType());
-							bf4.write(b.getS_dataNum());
-							bf4.write(b.getDate());
+						    bf.write(head.getStartCoode());
+						    bf.write(head.getCommand());
+						    bf.write(head.getSequence1());
+						    bf.write(head.getSequence2());
+						    bf.write(head.getSequence3());
+						    bf.write(head.getTerminalCat());
+						    bf.write(head.getIp());
+						    bf.write(head.getImei());
+						    bf.write(head.getDataSize());
+						    bf.write(b.getType());
+							bf.write(b.getS_dataNum());
+							bf.write(b.getDate());
 							for(int j=0; j<s2body.size(); j++) {
 								Sensor2Body body=s2body.get(j);
 								byte[][] fb = body.getFb_Accel();
 								byte[][] lr = body.getLr_Accel();
 								byte[][] ud = body.getUd_Accel();
 								byte[][] a = body.getA_Correct();
-								bf4.write(body.getpDataCat_postion());
-								bf4.write(body.getClassfy());
-						        bf4.write(body.getpDataNum_p());
-						        bf4.write(body.getDate());
-						        bf4.write(body.getLat());
-						        bf4.write(body.getLatSec());
-						        bf4.write(body.getLon());
-						        bf4.write(body.getLonSec());
-						        bf4.write(body.getSpeed());
-						        bf4.write(body.getQuality());
-						        bf4.write(body.getMode());
-						        bf4.write(body.getSatellite_num());
-						        bf4.write(body.getPDOP());
-						        bf4.write(body.getPosition());
-						        bf4.write(body.getHeight());
-						        bf4.write(body.getP_Correct());
-						        bf4.write(body.getpDataCat_sensor());
-						        bf4.write(body.getClassfy());
-						        bf4.write(body.getpDataNum_a());
+								bf.write(body.getpDataCat_postion());
+								bf.write(body.getClassfy());
+						        bf.write(body.getpDataNum_p());
+						        bf.write(body.getDate());
+						        bf.write(body.getLat());
+						        bf.write(body.getLatSec());
+						        bf.write(body.getLon());
+						        bf.write(body.getLonSec());
+						        bf.write(body.getSpeed());
+						        bf.write(body.getQuality());
+						        bf.write(body.getMode());
+						        bf.write(body.getSatellite_num());
+						        bf.write(body.getPDOP());
+						        bf.write(body.getPosition());
+						        bf.write(body.getHeight());
+						        bf.write(body.getP_Correct());
+						        bf.write(body.getpDataCat_sensor());
+						        bf.write(body.getClassfy());
+						        bf.write(body.getpDataNum_a());
 						        for(int k=0; k<10; k++) {
-									bf4.write(fb[k]);
-									bf4.write(lr[k]);
-									bf4.write(ud[k]);
-									bf4.write(a[k]);
+									bf.write(fb[k]);
+									bf.write(lr[k]);
+									bf.write(ud[k]);
+									bf.write(a[k]);
 								}
 							}
-							head.setDataSize(gbu.getHexBinary(fou.getSize(f4),4));
-							Sensor2Body b2=s2body.get(0);
-						    bf5.write(head.getStartCoode());
-						    bf5.write(head.getCommand());
-						    bf5.write(head.getSequence1());
-						    bf5.write(head.getSequence2());
-						    bf5.write(head.getSequence3());
-						    bf5.write(head.getTerminalCat());
-						    bf5.write(head.getIp());
-						    bf5.write(head.getImei());
-						    bf5.write(head.getDataSize());
-						    bf5.write(b2.getType());
-							bf5.write(b2.getS_dataNum());
-							bf5.write(b.getDate());
-							for(int j=0; j<s2body.size(); j++) {
-								Sensor2Body body=s2body.get(j);
-								byte[][] fb = body.getFb_Accel();
-								byte[][] lr = body.getLr_Accel();
-								byte[][] ud = body.getUd_Accel();
-								byte[][] a = body.getA_Correct();
-								bf5.write(body.getpDataCat_postion());
-								bf5.write(body.getClassfy());
-						        bf5.write(body.getpDataNum_p());
-						        bf5.write(body.getDate());
-						        bf5.write(body.getLat());
-						        bf5.write(body.getLatSec());
-						        bf5.write(body.getLon());
-						        bf5.write(body.getLonSec());
-						        bf5.write(body.getSpeed());
-						        bf5.write(body.getQuality());
-						        bf5.write(body.getMode());
-						        bf5.write(body.getSatellite_num());
-						        bf5.write(body.getPDOP());
-						        bf5.write(body.getPosition());
-						        bf5.write(body.getHeight());
-						        bf5.write(body.getP_Correct());
-						        bf5.write(body.getpDataCat_sensor());
-						        bf5.write(body.getClassfy());
-						        bf5.write(body.getpDataNum_a());
-						        for(int k=0; k<10; k++) {
-									bf5.write(fb[k]);
-									bf5.write(lr[k]);
-									bf5.write(ud[k]);
-									bf5.write(a[k]);
-								}
-							}
-							bf2.flush();
-							bf3.flush();
-							bf4.flush();
-							bf5.flush();
-							bf2.close();
-							bf3.close();
-							bf4.close();
-							bf5.close();
-
+							bf.flush();
+							bf.close();
 						}catch (IOException e) {
 				            e.printStackTrace();
 				        }
