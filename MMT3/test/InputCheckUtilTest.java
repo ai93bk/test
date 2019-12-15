@@ -32,10 +32,6 @@ class InputCheckUtilTest {
 		fail("まだ実装されていません");
 	}*/
 
-	@Test
-	void testCommand() {
-		fail("まだ実装されていません");
-	}
 	/**
 	 * 正常値の引数を渡したときに下記条件を満たしtrueとなるか
 	 * IN	引数:9999
@@ -49,9 +45,72 @@ class InputCheckUtilTest {
 	 * @throws InvocationTargetException
 	 */
 	@Test
-	void testTerminalCategory1() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	void testCommand1() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		InputCheckUtil icu = new InputCheckUtil("9999");
 		boolean expected = true;
+		Method method = InputCheckUtil.class.getDeclaredMethod("Command");
+		method.setAccessible(true);
+		boolean actual = (boolean)method.invoke(icu);
+		assertEquals(expected, actual);
+	}
+	/**
+	 * 異常値の引数を渡したときに下記条件を満たしfalseとなるか
+	 * IN	引数:""
+	 * 		条件:NullCheck
+	 * OUT	false
+	 *
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 */
+	@Test
+	void testTerminalCategory2() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		InputCheckUtil icu = new InputCheckUtil("");
+		boolean expected = false;
+		Method method = InputCheckUtil.class.getDeclaredMethod("TerminalCategory");
+		method.setAccessible(true);
+		boolean actual = (boolean)method.invoke(icu);
+		assertEquals(expected, actual);
+	}
+	/**
+	 * 異常値の引数を渡したときに下記条件を満たしfalseとなるか
+	 * IN	引数:12345
+	 * 		条件:CountCheck(4,4)
+	 * OUT	false
+	 *
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 */
+	@Test
+	void testTerminalCategory3() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		InputCheckUtil icu = new InputCheckUtil("12345");
+		boolean expected = false;
+		Method method = InputCheckUtil.class.getDeclaredMethod("TerminalCategory");
+		method.setAccessible(true);
+		boolean actual = (boolean)method.invoke(icu);
+		assertEquals(expected, actual);
+	}
+	/**
+	 * 異常値の引数を渡したときに下記条件を満たしfalseとなるか
+	 * IN	引数:-123
+	 * 		条件:FormatCheck(0,9999)
+	 * OUT	false
+	 *
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 */
+	@Test
+	void testTerminalCategory4() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		InputCheckUtil icu = new InputCheckUtil("-123");
+		boolean expected = false;
 		Method method = InputCheckUtil.class.getDeclaredMethod("TerminalCategory");
 		method.setAccessible(true);
 		boolean actual = (boolean)method.invoke(icu);
