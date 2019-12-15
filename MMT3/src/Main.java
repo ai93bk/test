@@ -141,11 +141,11 @@ public class Main {
 					head.setCommand(gbu.getHexBinary(read_data[3]));
 					head.setIp(gbu.getStringBinary(read_data[5]));
 					String seq = read_data[5]+read_data[1]+String.format("%09d",i);
-					head.setSequence1(gbu.getStringBinary(seq,1,16));
-					head.setSequence2(gbu.getStringBinary(seq,17,32));
-					head.setSequence3(gbu.getStringBinary(seq,33,35));
+					head.setSequence1(gbu.getStringBinary(seq.substring(0,16)));
+					head.setSequence2(gbu.getStringBinary(seq.substring(16,32)));
+					head.setSequence3(gbu.getStringBinary(seq.substring(32,35)));
 					head.setTerminalCat(gbu.getBCDBinary(read_data[4]));
-					head.setImei(gbu.getBCDBinary(read_data[6],1));
+					head.setImei(gbu.getBCDBinary(String.format("%016d", Long.valueOf(read_data[6]))));
 					ArrayList<Sensor1Body> s1body = new ArrayList<Sensor1Body>();
 					ArrayList<Sensor2Body> s2body = new ArrayList<Sensor2Body>();
 					if(mode==1) {

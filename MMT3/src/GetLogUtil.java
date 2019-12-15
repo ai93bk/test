@@ -5,7 +5,7 @@ public class GetLogUtil {
 	}
 
 	String getErrorLog() {
-		String str="[E020001システムエラーが発生しました";
+		String str="[E020001]システムエラーが発生しました";
 
 		return str;
 	}

@@ -14,10 +14,6 @@ public class FileMoveUtil {
 	}
 
 	public void moveFile()throws IOException{
-		try {
-			Files.move(this.src, this.dst, StandardCopyOption.REPLACE_EXISTING);
-		}catch(IOException e) {
-
-		}
+		Files.move(this.src, this.dst, StandardCopyOption.REPLACE_EXISTING);
 	}
 }

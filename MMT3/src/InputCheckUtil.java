@@ -189,55 +189,51 @@ public class InputCheckUtil {
 		return true;
 	}
 	boolean Command(){
-		if(!(NullCheck()&&CountCheck(8,8))){
-			if(!(FormatCheck(1,1,"1")||FormatCheck(1,1,"2"))){
-				if(!FormatCheck(2,6,"0")) {
-					if(!(FormatCheck(7,7,"1")||FormatCheck(7,7,"2")||FormatCheck(7,7,"3")||FormatCheck(7,7,"4")||FormatCheck(7,7,"5"))) {
-						if(!(FormatCheck(8,8,"1")||FormatCheck(8,8,"2"))) {
-							return false;
+		if((NullCheck()&&CountCheck(8,8))){
+			if((FormatCheck(1,1,"1")||FormatCheck(1,1,"2"))){
+				if(FormatCheck(2,6,"0")) {
+					if((FormatCheck(7,7,"1")||FormatCheck(7,7,"2")||FormatCheck(7,7,"3")||FormatCheck(7,7,"4")||FormatCheck(7,7,"5"))) {
+						if((FormatCheck(8,8,"1")||FormatCheck(8,8,"2"))) {
+							return true;
 						}
-						return false;
 					}
-					return false;
 				}
-				return false;
 			}
-			return false;
 		}
-		return true;
+		return false;
 	}
 
 	boolean TerminalCategory(){
-		if(!(NullCheck()&&CountCheck(4,4)&&FormatCheck(0,9999))) {
-			return false;
+		if((NullCheck()&&CountCheck(4,4)&&FormatCheck(0,9999))) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	boolean IP(){
-		if(!(NullCheck()&&CountCheck(12,12)&&FormatCheck(1,3,0,255)&&FormatCheck(4,6,0,255)&&FormatCheck(7,9,0,255)&&FormatCheck(10,12,0,255))) {
-			return false;
+		if((NullCheck()&&CountCheck(12,12)&&FormatCheck(1,3,0,255)&&FormatCheck(4,6,0,255)&&FormatCheck(7,9,0,255)&&FormatCheck(10,12,0,255))) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	boolean IMEI(){
-		if(!(NullCheck()&&CountCheck(1,16)&&FormatCheck(0L,999999999999999L))) {
-			return false;
+		if((NullCheck()&&CountCheck(1,16)&&FormatCheck(0L,999999999999999L))) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 	boolean Lat(){
-		if(!(NullCheck()&&CountCheck(8,8))) {
-			return false;
+		if((NullCheck()&&CountCheck(8,8))) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 	boolean Lon(){
-		if(!(NullCheck()&&CountCheck(9,9))) {
-			return false;
+		if((NullCheck()&&CountCheck(9,9))) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 	boolean Speed(){
 		if(!(NullCheck()&&CountCheck(1,4)&&FormatCheck(0,9999))) {
@@ -252,135 +248,109 @@ public class InputCheckUtil {
 		return true;
 	}
 	boolean MeasureMode() {
-		if(!(NullCheck()&&CountCheck(1,1)&&FormatCheck(1,4))) {
-			return false;
+		if((NullCheck()&&CountCheck(1,1)&&FormatCheck(1,4))) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 	boolean PositionAccel(){
-		if(!(NullCheck()&&CountCheck(1,5))){
-			if(!(FormatCheck(1,1,"-"))) {
-				if(!(FormatCheck(1,this.s.length(),0,9999))) {
-					return false;
-				}
-			}else {
-				if(!(FormatCheck(2,this.s.length(),0,9999))) {
-					return false;
-				}
-				return false;
+		if((NullCheck()&&CountCheck(1,5))){
+			if((FormatCheck(1,1,"-")&&(FormatCheck(2,this.s.length(),0,9999)))) {
+				return true;
+			}else if((FormatCheck(1,this.s.length(),0,9999))) {
+				return true;
 			}
-			return false;
 		}
-		return true;
+		return false;
 	}
 	boolean FrontBehindAccel(){
-		if(!(NullCheck()&&CountCheck(1,6))){
-			if(!(FormatCheck(1,1,"-"))) {
-				if(!(FormatCheck(1,this.s.length(),0,29999))) {
-					return false;
-				}
-			}else {
-				if(!(FormatCheck(2,this.s.length(),0,29999))) {
-					return false;
-				}
-				return false;
+		if((NullCheck()&&CountCheck(1,6))){
+			if((FormatCheck(1,1,"-")&&(FormatCheck(2,this.s.length(),0,29999)))) {
+				return true;
+			}else if((FormatCheck(1,this.s.length(),0,29999))) {
+				return true;
 			}
-			return false;
 		}
-		return true;
+		return false;
 	}
 	boolean LeftRightAccel(){
-		if(!(NullCheck()&&CountCheck(1,6))){
-			if(!(FormatCheck(1,1,"-"))) {
-				if(!(FormatCheck(1,this.s.length(),0,29999))) {
-					return false;
-				}
-			}else {
-				if(!(FormatCheck(2,this.s.length(),0,29999))) {
-					return false;
-				}
-				return false;
+		if((NullCheck()&&CountCheck(1,6))){
+			if((FormatCheck(1,1,"-")&&(FormatCheck(2,this.s.length(),0,29999)))) {
+				return true;
+			}else if((FormatCheck(1,this.s.length(),0,29999))) {
+				return true;
 			}
-			return false;
 		}
-		return true;
+		return false;
 	}
 	boolean UpDownAccel(){
-		if(!(NullCheck()&&CountCheck(1,6))){
-			if(!(FormatCheck(1,1,"-"))) {
-				if(!(FormatCheck(1,this.s.length(),0,29999))) {
-					return false;
-				}
-			}else {
-				if(!(FormatCheck(2,this.s.length(),0,29999))) {
-					return false;
-				}
-				return false;
+		if((NullCheck()&&CountCheck(1,6))){
+			if((FormatCheck(1,1,"-")&&(FormatCheck(2,this.s.length(),0,29999)))) {
+				return true;
+			}else if((FormatCheck(1,this.s.length(),0,29999))) {
+				return true;
 			}
-			return false;
 		}
-		return true;
+		return false;
 	}
 	boolean AccelCorrection(){
-		if(!(NullCheck()&&CountCheck(1,1)&&FormatCheck(0,2))) {
-					return false;
+		if((NullCheck()&&CountCheck(1,1)&&FormatCheck(0,2))) {
+					return true;
 				}
-		return true;
+		return false;
 	}
 	boolean Quality(){
-		if(!(NullCheck()&&CountCheck(1,1)&&FormatCheck(0,2))) {
-					return false;
+		if((NullCheck()&&CountCheck(1,1)&&FormatCheck(0,2))) {
+					return true;
 				}
-		return true;
+		return false;
 	}
 	boolean SatelliteNum(){
-		if(!(NullCheck()&&CountCheck(1,2)&&FormatCheck(0,12))) {
-					return false;
+		if((NullCheck()&&CountCheck(1,2)&&FormatCheck(0,12))) {
+					return true;
 				}
-		return true;
+		return false;
 	}
 	boolean PDOP(){
-		if(!(NullCheck()&&CountCheck(1,3)&&FormatCheck(0,500))) {
-					return false;
+		if((NullCheck()&&CountCheck(1,3)&&FormatCheck(0,500))) {
+					return true;
 				}
-		return true;
+		return false;
 	}
 	boolean Height(){
-		if(!(NullCheck()&&CountCheck(1,6))) {
-			if(!(FormatCheck(1,1,"-"))) {
-				if(!(FormatCheck(1,this.s.length(),0,30000))) {
-					return false;
-				}
-			}else if(!(FormatCheck(2,this.s.length(),0,30000))) {
-				return false;
+		if((NullCheck()&&CountCheck(1,6))) {
+			if((FormatCheck(1,1,"-")&&(FormatCheck(2,this.s.length(),0,30000)))) {
+				return true;
+			}else if((FormatCheck(1,this.s.length(),0,30000))) {
+				return true;
 			}
 			return false;
 		}
-		return true;
+		return false;
 	}
 	boolean PositionCorrection(){
-		if(!(NullCheck()&&CountCheck(1,1)&&FormatCheck(0,2))) {
-			return false;
+		if((NullCheck()&&CountCheck(1,1)&&FormatCheck(0,2))) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 	boolean LatSector(){
-		if(!(NullCheck()&&CountCheck(1,1))) {
-			if(!(FormatCheck(1,1,"N")||FormatCheck(1,1,"S")||FormatCheck(1,1,"0"))) {
-				return false;
+		if((NullCheck()&&CountCheck(1,1))) {
+			if((FormatCheck(1,1,"N")||FormatCheck(1,1,"S")||FormatCheck(1,1,"0"))) {
+				return true;
 			}
 			return false;
 		}
-		return true;
+		return false;
 	}
 	boolean LonSector(){
-		if(!(NullCheck()&&CountCheck(1,1))) {
-			if(!(FormatCheck(1,1,"E")||FormatCheck(1,1,"W")||FormatCheck(1,1,"0"))) {
-				return false;
+		if((NullCheck()&&CountCheck(1,1))) {
+			if((FormatCheck(1,1,"E")||FormatCheck(1,1,"W")||FormatCheck(1,1,"0"))) {
+				return true;
 			}
 			return false;
 		}
-		return true;
+		return false;
 	}
 
 
@@ -431,7 +401,7 @@ public class InputCheckUtil {
 		return true;
 	}
 	boolean FormatCheck(int from,int to,int min,int max) {
-		if(!(Integer.valueOf(this.s.substring(from-1,to))>=min&&Integer.valueOf(this.s.substring(from-1,to))<max)) {
+		if(!(Integer.valueOf(this.s.substring(from-1,to))>=min&&Integer.valueOf(this.s.substring(from-1,to))<=max)) {
 			log.warn(glu.getWarnLog(11)+"\t"+this.rownum+"行目 "+this.colnum+"列目");
 			return false;
 		}
