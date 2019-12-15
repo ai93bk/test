@@ -85,95 +85,95 @@ public class InputCheckUtil {
 		this.colnum=col;
 		this.rownum=row;
 		if(col==1) {
-			if(!(MeasureDate())) {
-				return false;
+			if((MeasureDate())) {
+				return true;
 			}
 		}else if(col==2) {
-			if(!(RegisterDate())) {
-				return false;
+			if((RegisterDate())) {
+				return true;
 			}
 		}else if(col==3) {
-			if(!(Command())) {
-				return false;
+			if((Command())) {
+				return true;
 			}
 		}else if(col==4) {
-			if(!(TerminalCategory())) {
-				return false;
+			if((TerminalCategory())) {
+				return true;
 			}
 		}else if(col==5) {
-			if(!(IP())) {
-				return false;
+			if((IP())) {
+				return true;
 			}
 		}else if(col==6) {
-			if(!(IMEI())) {
-				return false;
+			if((IMEI())) {
+				return true;
 			}
 		}else if(col==7) {
-			if(!(Lat())) {
-				return false;
+			if((Lat())) {
+				return true;
 			}
 		}else if(col==8) {
-			if(!(Lon())) {
-				return false;
+			if((Lon())) {
+				return true;
 			}
 		}else if(col==9) {
-			if(!(Speed())) {
-				return false;
+			if((Speed())) {
+				return true;
 			}
 		}else if(col==10) {
-			if(!(Position())) {
-				return false;
+			if((Position())) {
+				return true;
 			}
 		}else if(col==11) {
-			if(!(MeasureMode())) {
-				return false;
+			if((MeasureMode())) {
+				return true;
 			}
 		}else if(col>=13 && col<=22) {
-			if(!(FrontBehindAccel())) {
-				return false;
+			if((FrontBehindAccel())) {
+				return true;
 			}
 		}else if(col>=23 &&col <=32) {
-			if(!(LeftRightAccel())) {
-				return false;
+			if((LeftRightAccel())) {
+				return true;
 			}
 		}else if(col>=33 && col<=42) {
-			if(!(UpDownAccel())) {
-				return false;
+			if((UpDownAccel())) {
+				return true;
 			}
 		}else if(col>=43 && col <= 52) {
-			if(!(AccelCorrection())) {
-				return false;
+			if((AccelCorrection())) {
+				return true;
 			}
 		}else if(col==53) {
-			if(!(Quality())) {
-				return false;
+			if((Quality())) {
+				return true;
 			}
 		}else if(col== 54) {
-			if(!(SatelliteNum())) {
-				return false;
+			if((SatelliteNum())) {
+				return true;
 			}
 		}else if(col== 55) {
-			if(!(PDOP())) {
-				return false;
+			if((PDOP())) {
+				return true;
 			}
 		}else if(col== 56) {
-			if(!(Height())) {
-				return false;
+			if((Height())) {
+				return true;
 			}
 		}else if(col == 57) {
-			if(!(PositionCorrection())) {
-				return false;
+			if((PositionCorrection())) {
+				return true;
 			}
 		}else if(col == 58) {
-			if(!(LatSector())) {
-				return false;
+			if((LatSector())) {
+				return true;
 			}
 		}else if(col == 59) {
-			if(!(LonSector())) {
-				return false;
+			if((LonSector())) {
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
 	boolean MeasureDate(){
@@ -183,15 +183,15 @@ public class InputCheckUtil {
 		return true;
 	}
 	boolean RegisterDate(){
-		if(!(NullCheck()&&CountCheck(14,14)&&FormatCheck())) {
-			return false;
+		if((NullCheck()&&CountCheck(14,14)&&FormatCheck())) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 	boolean Command(){
 		if((NullCheck()&&CountCheck(8,8))){
 			if((FormatCheck(1,1,"1")||FormatCheck(1,1,"2"))){
-				if(FormatCheck(2,6,"0")) {
+				if(FormatCheck(2,6,"00000")) {
 					if((FormatCheck(7,7,"1")||FormatCheck(7,7,"2")||FormatCheck(7,7,"3")||FormatCheck(7,7,"4")||FormatCheck(7,7,"5"))) {
 						if((FormatCheck(8,8,"1")||FormatCheck(8,8,"2"))) {
 							return true;

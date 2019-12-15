@@ -4,8 +4,13 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.junit.jupiter.api.Test;
 
-
-class GetBinaryUtilTest {
+/***
+ *<pre>
+ *GetBinaryUtilのテスト用クラス
+ *GetBinaryUtil=byte配列の引数をもとにチェックコード(CRC8)を算出し返却するクラス
+ *</pre>
+ */
+public class GetBinaryUtilTest {
 
 	GetBinaryUtil gbu = new GetBinaryUtil();
 	byte[] hexstr1 = DatatypeConverter.parseHexBinary("000"+Integer.toHexString(Integer.valueOf("10")));
@@ -16,9 +21,11 @@ class GetBinaryUtilTest {
 
 
 	/**
+	 * <pre>
 	 * 文字列(データサイズ2)から期待するバイナリ文字列(リトルエンディアン表記,下位0埋め)に変換されているか
-	 * IN	文字列"10",データサイズ2
-	 * OUT	byte型配列(リトルエンディアン表記,下位0埋め)"10"
+	 * IN(引数)	文字列"10",データサイズ2
+	 * OU(期待値)T	byte型配列(リトルエンディアン表記,下位0埋め)"10"
+	 * </pre>
 	 */
 	@Test
 	public void test_getHexBinary1() {
@@ -26,9 +33,11 @@ class GetBinaryUtilTest {
 	}
 
 	/**
+	 * <pre>
 	 ** 文字列から期待するバイナリ文字列(リトルエンディアン表記)に変換されているか
-	 * IN	16進数文字列"10"
-	 * OUT	byte型配列"10"
+	 * IN(引数)	16進数文字列"10"
+	 * OUT(期待値)	byte型配列"10"
+	 * </pre>
 	 */
 	@Test
 	public void test_getHexBinary2() {
@@ -36,9 +45,11 @@ class GetBinaryUtilTest {
 	}
 
 	/**
+	 * <pre>
 	 * 16進数文字列から期待するバイナリ文字列に変換されているか
-	 * IN	16進数文字列"10"
-	 * OUT	byte型配列"10"
+	 * IN(引数)	16進数文字列"10"
+	 * OUT(期待値)	byte型配列"10"
+	 * </pre>
 	 */
 	@Test
 	public void test_getBCDBinary() {
@@ -46,9 +57,11 @@ class GetBinaryUtilTest {
 	}
 
 	/**
+	 * <pre>
 	 * 文字列から期待するバイナリ文字列に変換されているか
-	 * IN	文字列"10"
-	 * OUT	byte型配列"10"
+	 * IN(引数)	文字列"10"
+	 * OUT(期待値)	byte型配列"10"
+	 * </pre>
 	 */
 	@Test
 	public void test_getStringBinary() {

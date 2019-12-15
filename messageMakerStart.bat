@@ -50,8 +50,9 @@ if exist car_messageMaker.lock (
 
   rem ********************
   rem ディスクフルチェック
-  if "%DISKFREE:~0,3%%DISKFREE:~4,3%%DISKFREE:~8,3%%DISKFREE:~12,3%" LEQ "0" (
+  if "%DISKFREE:~0,3%%DISKFREE:~4,3%%DISKFREE:~8,3%%DISKFREE:~12,3%" LEQ "999999999999999" (
     echo [W010006]ディスク容量がいっぱいのため実行できません ディスク容量:%DIKFREE% >> ../log/car_messageMaker_%yyyy%%mm%%dd%.log
+    echo 警告：ディスクフル
   ) else (
 
     rem *******************
@@ -120,10 +121,10 @@ if exist car_messageMaker.lock (
             rem *******************
             rem Jar実行
             echo [I010016]開始：Javaプログラム >> ../log/car_messageMaker_%yyyy%%mm%%dd%.log
+            echo 開始：Javaプログラム
             set PATH=%bin_path%;%lib_path%;
             java -jar ../lib/MMT.jar
-            echo 開始：Javaプログラム
-            if %errorlevel% neq 0 (
+            if not exist ../lib/MMT.jar (
               echo 警告：Javaプログラム失敗
             ) else (
               echo [I010017]終了：Javaプログラム >> ../log/car_messageMaker_%yyyy%%mm%%dd%.log
