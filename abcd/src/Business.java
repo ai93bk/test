@@ -442,14 +442,13 @@ public class Business {
 		bf.close();
 	}
 
-	public void execute_main(){
+	public void execute_main() throws IOException{
 		Calendar cl = getCl();
 		time1 = getTime1(cl);
 		time2 = getTime2(cl);
 		setLog4j_conf(time1);
 
 		log.info(glu.getInfoLog(16));
-
 
 		if(gpu.getLength()>0) {
 			csv_path_list=gpu.getCSVPathList();
@@ -480,19 +479,13 @@ public class Business {
 					writeSensor2(mode);
 
 					plusCheckCode();
-				}catch(IOException e) {
-					errorfile[i]=2;
-					log.error(glu.getErrorLog()+"IOException"+e.getLocalizedMessage());
 				}catch(IndexOutOfBoundsException e) {
 					errorfile[i]=2;
 					log.error(glu.getErrorLog()+"IndexOutOfBoundsException"+e.getLocalizedMessage());
 				}
 			}
 			log.info(glu.getInfoLog(17));
-			try {
 				toMoveCSV(time2);
-			} catch (IOException e) {
-			}
 		}else if(gpu.getLength() == 0){
 			log.warn(glu.getWarnLog(7)+"\t"+in_dir);
 			log.info(glu.getInfoLog(17));
