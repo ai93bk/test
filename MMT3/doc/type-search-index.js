@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"InputCheckUtilTest","h":"","u":""},{"l":"すべてのクラス","h":"","u":"allclasses-index.html"}]
