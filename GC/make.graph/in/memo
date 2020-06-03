@@ -1,0 +1,17 @@
+★CPU/メモリ使用率
+　横0:00:01から１秒間隔（今回は）
+　縦0~100%
+★TAT
+　横ログの時間
+　縦0~6000など不定　テキストから範囲読込みがいいのでは　デフォルト値:0の場合はjavafxにお任せ
+
+★ログ形式
+220-05-27 14:40:00,475 DEBAUG (Collect.java209) (Thread-457) - [受信リクエスト電文:K2020052714362701095817,0144,DMC,U2,00,172014241234,00,0,0,0,2xxx.xxxxxx,xxxx.xxxxx,1,068,200527143957,901,000,1,0,4,00,T580008000800080008000,D]
+220-05-27 14:40:00,475 DEBAUG (Collect.java838) (Thread-457) - [送信レスポンス電文:K2020052714362701095817,0144,DMC,U2,00,172014241234,00,0,0,0,2xxx.xxxxxx,xxxx.xxxxx,1,068,200527143957,901,000,1,0,4,00,T580008000800080008000,D]
+cpu = user
+mem = メモリ使用量（memused - memcashed - membuffer）/メモリ総量（memused + memfree）
+
+★URL:
+ https://nompor.com/2019/01/26/post-4978/
+ https://itech-program.com/java/1180
+ https://docs.oracle.com/javase/jp/8/javafx/user-interface-tutorial/area-chart.htm
