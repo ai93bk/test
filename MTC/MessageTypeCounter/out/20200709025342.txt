@@ -1,0 +1,2 @@
+msgID={abc}ÅF3
+msgID={abc}ÅF1
