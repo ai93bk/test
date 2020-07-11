@@ -1,10 +1,26 @@
-@echo off	
+@echo off
+
 @if "%1" equ "" (
-  set USR_INPUT_STR=
-  set /P USR_INPUT_STR="文字列を入力してください: "
-  java -jar ../lib/log_type_count.jar %USR_INPUT_STR%
+  goto :input
 ) else (
-  java -jar ../lib/log_type_count.jar %1
+  goto :jar_start_2
 )
 
+:input
+set input_str=
+set /p input_str="読み込むログファイルパスを入力してください："
+goto :jar_start_1
+
+:jar_start_1
+echo ＊＊＊ツール実行中。しばらくお待ちください。＊＊＊
+java -jar ../lib/log_type_count.jar %input_str% %~dp0
+goto :end
+ 
+:jar_start_2
+echo ＊＊＊ツール実行中。しばらくお待ちください。＊＊＊
+java -jar ../lib/log_type_count.jar %1 %~dp0
+goto :end
+
+:end
+echo ＊＊＊ツール実行終了＊＊＊
 pause
