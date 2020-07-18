@@ -1,0 +1,16 @@
+◎config
+ starttime
+ endtime
+
+◎bat
+ scale入力
+
+java
+ ◎property値読込み
+ ◎時間→秒数変換メソッド
+　→性能調査（劣化有無）
+ ◎strat-end時間でif文
+ 引数3を使用・変数に格納→scale毎で集計計算
+
+array(1)=[0,1,・・・,47]
+array(2)=[0,1,・・・,47]
