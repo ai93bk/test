@@ -149,12 +149,14 @@ public class Main {
 				try {
 					if(flg == 0) {  //開始時の秒数を記録しておく
 						timeStart = getMinute(Integer.valueOf(line.substring(11,13)), Integer.valueOf(line.substring(14,16)));
-						timeScale = timeStart + scaleList[scale-1];
-						count = new int[wordlist.size()];
-						for(int i=0; i<wordlist.size(); i++) {
-							count[i] = 0;
+						if(startMinute <= timeStart) {
+							timeScale = timeStart + scaleList[scale-1];
+							count = new int[wordlist.size()];
+							for(int i=0; i<wordlist.size(); i++) {
+								count[i] = 0;
+							}
+							flg = 1;
 						}
-						flg = 1;
 					}
 					timeNow = getMinute(Integer.valueOf(line.substring(11,13)), Integer.valueOf(line.substring(14,16))) - timeStart;
 					//現在の行の時間(秒)-開始時の時間(秒)
@@ -198,7 +200,7 @@ public class Main {
 	//第4引数：開始時間秒数
 	//第5引数：集計間隔
 	static void writeText(String filename, ArrayList<String> list, ArrayList<int[]> count, int startMinute, int scale) {
-		int scaleList[] = {1,10,60};	//集計間隔（1分,10分,60分）
+		int scaleList[] = {60,600,3600};	//集計間隔（1分,10分,60分）
 		int value[] = new int[list.size()];
 		try {
 			FileWriter fw = new FileWriter(filename,true);
@@ -234,12 +236,6 @@ public class Main {
 
 	//秒→HH:mmに変換するメソッド
 	static String getMinuteFormat(int min) {
-		int hour = 0;
-		int minute = 0;
-		hour = min/60;
-		if(min%60 != 0) {
-			minute = min;
-		}
-		return String.format("%02d",hour) + ":" + String.format("%02d",minute);
+		return String.format("%02d",min/3600) + "：" + String.format("%02d",(min%3600)/60);
 	}
 }
